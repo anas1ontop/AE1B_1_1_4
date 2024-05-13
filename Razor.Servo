@@ -1,0 +1,21 @@
+from machine import Pin, PWM
+from time import sleep
+
+# Initialize GP0 as PWM pin
+servo = PWM(Pin(0))
+
+# Set the PWM frequency
+servo.freq(50)
+
+def set_angle(angle):
+    # Convert the angle to duty cycle
+    duty = int((angle / 180) * 65535)
+    servo.duty_u16(duty)
+
+for _ in range(5):
+    for angle in range(0, 180, 1):
+        set_angle(angle)
+        sleep(0.005)  # Decreased delay for faster movement
+    for angle in range(180, 0, -1):
+        set_angle(angle)
+        sleep(0.005)  # Decreased delay for faster movement
